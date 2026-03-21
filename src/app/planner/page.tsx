@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 import { TripPlanner } from "@/components/home/TripPlanner";
 import { Shield, Banknote, Clock8 } from "lucide-react";
 
@@ -78,10 +79,7 @@ export default function PlannerPage() {
          </div>
       </section>
 
-      <footer className="py-24 bg-white border-t border-navy/5 flex flex-col items-center gap-6">
-         <div className="w-px h-12 bg-purple/20 mb-4" />
-         <p className="text-navy/20 text-[10px] tracking-[0.5em] uppercase font-bold">Flying Bird Tours Sri Lanka &copy; 2026</p>
-      </footer>
+      <Footer />
     </main>
   );
 }

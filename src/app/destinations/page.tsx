@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 import { MapPin, ArrowRight, Star } from "lucide-react";
 
 const destinations = [
@@ -105,10 +106,7 @@ export default function DestinationsPage() {
         </div>
       </section>
 
-      {/* Quick Footer */}
-      <footer className="py-24 bg-ivory text-navy/20 text-center text-[10px] tracking-[0.5em] uppercase font-bold border-t border-navy/5">
-         Flying Bird Tours Sri Lanka &bull; All Rights Reserved &copy; 2026
-      </footer>
+      <Footer />
     </main>
   );
 }

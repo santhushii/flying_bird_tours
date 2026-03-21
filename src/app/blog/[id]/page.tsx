@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 import Image from "next/image";
 import { Link, Calendar, Clock, ArrowLeft, Share2 } from "lucide-react";
 import NextLink from "next/link";
@@ -71,9 +72,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
         </div>
       </article>
 
-      <footer className="py-24 bg-ivory text-navy/20 text-center text-[10px] tracking-[0.5em] uppercase font-bold border-t border-navy/5">
-         Flying Bird Tours Sri Lanka &bull; All Rights Reserved &copy; 2026
-      </footer>
+      <Footer />
     </main>
   );
 }

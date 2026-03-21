@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 import Image from "next/image";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 
@@ -62,9 +63,7 @@ export default function BlogPage() {
         </div>
       </section>
 
-      <footer className="py-24 bg-ivory text-navy/20 text-center text-[10px] tracking-[0.5em] uppercase font-bold border-t border-navy/5">
-         Flying Bird Tours Sri Lanka &bull; All Rights Reserved &copy; 2026
-      </footer>
+      <Footer />
     </main>
   );
 }

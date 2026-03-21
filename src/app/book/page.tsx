@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 import { BookingForm } from "@/components/booking/BookingForm";
 
 export default function BookingPage() {
@@ -49,9 +50,7 @@ export default function BookingPage() {
       </section>
 
       {/* Basic Footer */}
-      <footer className="py-12 border-t border-black/5 flex flex-col items-center gap-4">
-         <p className="text-foreground/40 text-[10px] tracking-widest uppercase">&copy; 2026 Flying Bird Tours Sri Lanka</p>
-      </footer>
+      <Footer />
     </main>
   );
 }

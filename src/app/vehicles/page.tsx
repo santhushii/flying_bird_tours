@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 import { vehicles } from "@/data/vehicles";
 import { VehicleCard } from "@/components/vehicles/VehicleCard";
 import { Info, Shield, Clock, Map } from "lucide-react";
@@ -62,9 +63,7 @@ export default function VehiclesPage() {
          </button>
       </section>
 
-      <footer className="py-12 border-t border-black/5 text-center">
-         <p className="text-foreground/40 text-[10px] tracking-widest uppercase">&copy; 2026 Flying Bird Tours Sri Lanka</p>
-      </footer>
+      <Footer />
     </main>
   );
 }
