@@ -5,9 +5,9 @@ import { Calendar, Clock, ArrowRight } from "lucide-react";
 
 export default function BlogPage() {
   const posts = [
-    { id: "waterfalls", title: "Top 10 Hidden Waterfalls in Ella", category: "Travel Tips", date: "April 12, 2026", img: "/destinations/ella.png" }, 
-    { id: "whale-watching", title: "Whale Watching in Mirissa: A Complete Guide", category: "Wildlife", date: "Jan 15, 2026", img: "/destinations/mirissa.png" }, 
-    { id: "ancient-cities", title: "The Cultural Triangle: Visiting Ancient Cities", category: "Culture", date: "July 20, 2026", img: "/destinations/sigiriya.png" }, 
+    { id: "top-10-waterfalls", title: "Top 10 Hidden Waterfalls in Ella", category: "Travel Tips", date: "April 12, 2026", img: "/blog/waterfall.png" }, 
+    { id: "whale-watching", title: "Whale Watching in Mirissa: A Complete Guide", category: "Wildlife", date: "Jan 15, 2026", img: "/blog/whale.png" }, 
+    { id: "kandy-perahera", title: "The Cultural Triangle: Visiting Ancient Cities", category: "Culture", date: "July 20, 2026", img: "/blog/kandy.png" }, 
     { id: "train-journeys", title: "Scenic Train Journeys: Tips for Booking", category: "Adventure", date: "March 5, 2026", img: "/destinations/kandy.png" } 
   ];
 

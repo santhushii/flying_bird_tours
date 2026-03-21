@@ -8,7 +8,7 @@ import { Hero } from "@/components/home/Hero";
 import { VehicleCard } from "@/components/vehicles/VehicleCard";
 import { vehicles } from "@/data/vehicles";
 import { TripPlanner } from "@/components/home/TripPlanner";
-import { MapPin, Map, Car, Star, Quote, Mail, Phone, Instagram, Compass } from "lucide-react";
+import { MapPin, Map, Car, Star, Quote, Mail, Phone, Instagram, Compass, ArrowRight } from "lucide-react";
 
 export default function Home() {
   const fadeInUp = {
@@ -26,7 +26,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen overflow-x-hidden">
+    <main className="min-h-screen overflow-x-hidden bg-white">
       <Navbar />
       <Hero />
       
@@ -40,7 +40,7 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <motion.div variants={fadeInUp} className="flex flex-col items-center gap-4 mb-20 text-center">
              <span className="text-purple font-display font-extrabold tracking-[0.4em] uppercase text-xs">Explore Paradise</span>
-             <h1 className="text-5xl md:text-8xl font-display font-black text-navy leading-tight tracking-tighter uppercase">OUR FEATURED <br /> DESTINATIONS</h1>
+             <h2 className="text-5xl md:text-8xl font-display font-black text-navy leading-tight tracking-tighter uppercase">OUR FEATURED <br /> DESTINATIONS</h2>
              <div className="w-24 h-1.5 bg-purple mt-6 rounded-full" />
              <p className="text-center text-navy/50 max-w-2xl mt-10 leading-relaxed text-xl font-medium">
                Explore the hidden gems and iconic landmarks of the pearl of the Indian Ocean.
@@ -103,7 +103,6 @@ export default function Home() {
       </motion.section>
 
       {/* Vehicle Showcase Section */}
-      {/* Vehicle Showcase Section */}
       <motion.section 
         className="py-32 bg-ivory/50"
         initial="initial"
@@ -146,7 +145,7 @@ export default function Home() {
 
       {/* Review System Section */}
       <motion.section 
-        className="py-40 bg-background relative overflow-hidden"
+        className="py-40 bg-white relative overflow-hidden"
         initial="initial"
         whileInView="whileInView"
         viewport={{ once: true }}
@@ -197,7 +196,7 @@ export default function Home() {
                  <motion.div 
                    key={i} 
                    variants={fadeInUp}
-                   className="glass p-12 rounded-[3.5rem] border border-white/5 hover:border-primary/40 transition-all group relative overflow-hidden"
+                   className="glass p-12 rounded-[3.5rem] border border-white/5 shadow-xl hover:border-primary/40 transition-all group relative overflow-hidden"
                  >
                     <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-[100px] -z-10 group-hover:bg-primary/10 transition-colors" />
                     <Quote className="text-primary mb-8 w-10 h-10 group-hover:rotate-12 transition-transform" />
@@ -217,77 +216,89 @@ export default function Home() {
 
       {/* Blog System Preview */}
       <motion.section 
-        className="py-40 bg-ivory/20 dark:bg-black/40"
+        className="py-40 bg-ivory/30 relative overflow-hidden"
         initial="initial"
         whileInView="whileInView"
         viewport={{ once: true }}
       >
         <div className="container mx-auto px-6">
-           <motion.div variants={fadeInUp} className="flex justify-between items-end mb-24">
-              <div>
-                 <span className="text-primary font-display font-bold tracking-[0.3em] uppercase mb-6 block text-sm">Travel Insights</span>
-                 <h2 className="text-5xl md:text-7xl font-display font-bold tracking-tighter">LATEST FROM <br /> <span className="text-gold">OUR BLOG</span></h2>
+           <motion.div variants={fadeInUp} className="flex flex-col md:flex-row justify-between items-end gap-12 mb-24 relative z-20">
+              <div className="flex flex-col gap-6">
+                 <span className="text-primary font-display font-bold tracking-[0.3em] uppercase text-sm">Travel Insights</span>
+                 <h2 className="text-5xl md:text-8xl font-display font-bold tracking-tighter leading-tight">LATEST FROM <br /> <span className="text-gold">OUR BLOG</span></h2>
               </div>
               <motion.button 
                 whileHover={{ x: 5 }}
-                className="hidden md:flex items-center gap-4 group text-sm font-bold tracking-[0.3em] uppercase"
+                className="flex items-center gap-4 group text-sm font-bold tracking-[0.3em] uppercase"
+                onClick={() => window.location.href = '/blog'}
               >
                  READ ALL POSTS
-                 <div className="w-14 h-14 rounded-full border border-foreground/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all group-hover:border-primary shadow-xl">
-                    <Compass size={22} />
+                 <div className="w-16 h-16 rounded-full border border-navy/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all group-hover:border-primary shadow-xl bg-white">
+                    <Compass size={24} />
                  </div>
               </motion.button>
            </motion.div>
            
+           <motion.h2 
+             variants={fadeInUp} 
+             className="text-[12rem] md:text-[20rem] font-display font-black text-primary/5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 leading-none select-none z-0 pointer-events-none whitespace-nowrap opacity-30"
+           >
+             OUR BLOG
+           </motion.h2>
+
            <motion.div 
              variants={stagger}
-             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12"
+             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 relative z-10"
            >
               {[
                 { 
                   title: "Top 10 Hidden Waterfalls", 
                   category: "Travel Tips", 
                   date: "April 12, 2026", 
-                  img: "https://images.unsplash.com/photo-1452626012636-33e0ed9a11ac?auto=format&fit=crop&q=80&w=1200", 
+                  img: "/blog/waterfall.png", 
                   slug: "top-10-waterfalls" 
                 },
                 { 
                   title: "A Guide to Kandy Perahera", 
                   category: "Culture", 
                   date: "July 20, 2026", 
-                  img: "https://images.unsplash.com/photo-1546708973-b339540b5162?auto=format&fit=crop&q=80&w=1200", 
+                  img: "/blog/kandy.png", 
                   slug: "kandy-perahera" 
                 },
                 { 
                   title: "Whale Watching in Mirissa", 
                   category: "Wildlife", 
                   date: "Jan 15, 2026", 
-                  img: "https://images.unsplash.com/photo-1590508492212-9c169abb7a75?auto=format&fit=crop&q=80&w=1200", 
+                  img: "/blog/whale.png", 
                   slug: "whale-watching" 
                 }
               ].map((post, i) => (
                 <motion.div 
                   key={i} 
                   variants={fadeInUp} 
-                  className="group cursor-pointer"
+                  className="group cursor-pointer bg-white p-6 rounded-[3rem] shadow-xl hover:shadow-2xl transition-all"
                   onClick={() => window.location.href = `/blog/${post.slug}`}
                 >
-                   <div className="relative h-80 rounded-[2.5rem] overflow-hidden mb-8 shadow-xl">
+                   <div className="relative h-72 rounded-[2.5rem] overflow-hidden mb-8 shadow-inner bg-lavender">
                       <Image 
                         src={post.img} 
                         alt={post.title}
                         fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="object-cover group-hover:scale-110 transition-transform duration-1000"
                       />
                       <div className="absolute top-6 left-6 bg-primary text-white text-[10px] font-bold px-5 py-2 rounded-full uppercase tracking-[0.2em] shadow-2xl">
                         {post.category}
                       </div>
                    </div>
-                   <h3 className="text-3xl font-display font-bold mb-4 group-hover:text-primary transition-colors leading-tight tracking-tight">{post.title}</h3>
-                   <div className="flex items-center gap-4 text-[10px] font-bold text-foreground/40 uppercase tracking-[0.2em]">
-                      <span>{post.date}</span>
-                      <span className="w-1.5 h-1.5 bg-primary rounded-full" />
-                      <span>5 min read</span>
+                   <div className="px-4 pb-4">
+                     <h3 className="text-2xl font-display font-bold mb-4 group-hover:text-primary transition-colors leading-tight tracking-tight">{post.title}</h3>
+                     <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4 text-[10px] font-bold text-foreground/40 uppercase tracking-[0.2em]">
+                           <span>{post.date}</span>
+                        </div>
+                        <ArrowRight size={18} className="text-primary opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all" />
+                     </div>
                    </div>
                 </motion.div>
               ))}
@@ -296,7 +307,7 @@ export default function Home() {
       </motion.section>
 
       {/* Footer / Contact Preview */}
-      <footer className="bg-ivory text-navy pt-40 pb-16 border-t border-navy/5">
+      <footer className="bg-white text-navy pt-40 pb-16 border-t border-navy/5">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-20 mb-32">
             <div className="col-span-1 md:col-span-1">
@@ -340,7 +351,7 @@ export default function Home() {
                <h4 className="text-navy font-bold mb-10 tracking-[0.3em] uppercase text-xs">Get In Touch</h4>
                <p className="text-navy/40 text-sm mb-8 font-medium">Receive curated travel tips and exclusive local deals.</p>
                <div className="flex flex-col gap-4">
-                  <input type="text" placeholder="Email Address" className="bg-white border border-navy/5 px-6 py-4 rounded-2xl focus:outline-none focus:border-purple w-full text-sm font-medium transition-all shadow-sm" />
+                  <input type="text" placeholder="Email Address" className="bg-lavender/50 border border-navy/5 px-6 py-4 rounded-2xl focus:outline-none focus:border-purple w-full text-sm font-medium transition-all shadow-sm" />
                   <motion.button 
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -388,6 +399,3 @@ export default function Home() {
     </main>
   );
 }
-
-
-
