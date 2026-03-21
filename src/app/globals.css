@@ -1,26 +1,106 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FFFFFF;
+  --foreground: #1A1A1A;
+  
+  /* Brand Colors as Accents */
+  --brand-navy: #2D2A4E;
+  --brand-purple: #8B3A8E;
+  --brand-red: #E32F2F;
+  --brand-lavender: #F9F7FC;
+  --brand-ivory: #FDFBF7;
+  
+  /* Theme Mappings */
+  --primary: var(--brand-purple);
+  --secondary: var(--brand-navy);
+  --accent: var(--brand-red);
+  --gold: #C5A059; /* More elegant gold */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-gold: var(--gold);
+  --color-navy: var(--brand-navy);
+  --color-purple: var(--brand-purple);
+  --color-red: var(--brand-red);
+  --color-ivory: var(--brand-ivory);
+  --color-lavender: var(--brand-lavender);
+  
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-outfit);
+  
+  --shadow-3xl: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #FFFFFF; /* Forcing Light mode by default for better tourism feel */
+    --foreground: #1A1A1A;
   }
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply antialiased transition-colors duration-500 selection:bg-purple/10 selection:text-purple;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
+
+h1, h2, h3, h4, .font-display {
+  letter-spacing: -0.03em;
+}
+
+/* Glassmorphism utility - Better for Light Mode */
+.glass {
+  @apply bg-white/70 backdrop-blur-xl border border-white/40 shadow-xl;
+}
+
+.glass-dark {
+  @apply bg-navy/90 backdrop-blur-3xl border border-white/10 shadow-3xl;
+}
+
+/* Anti-gravity floating animation */
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(1deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 5px;
+  border: 3px solid var(--background);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
