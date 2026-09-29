@@ -25,6 +25,8 @@ import { useSearchParams } from "next/navigation";
 
 export function BookingForm() {
   const searchParams = useSearchParams();
+  const vehicleParam = searchParams.get("vehicle") || searchParams.get("vehicleId") || "";
+  const initialVehicle = vehicles.find((v) => v.id.toLowerCase() === vehicleParam.toLowerCase()) || vehicles[0];
 
   const {
     register,
@@ -34,14 +36,19 @@ export function BookingForm() {
   } = useForm<BookingValues>({
     resolver: zodResolver(bookingSchema),
     defaultValues: {
-      vehicleId: vehicles[0].id,
+      vehicleId: initialVehicle.id,
       pickup: searchParams.get("pickup") || "",
-      startDate: searchParams.get("date") || "",
+      dropoff: searchParams.get("dropoff") || "",
+      startDate: searchParams.get("date") || searchParams.get("startDate") || "",
+      endDate: searchParams.get("endDate") || "",
+      name: "",
+      phone: "",
+      notes: searchParams.get("notes") || "",
     },
   });
 
-  const vehicleId = useWatch({ control, name: "vehicleId" });
-  const selectedVehicle = vehicles.find((v) => v.id === vehicleId) || vehicles[0];
+  const vehicleId = useWatch({ control, name: "vehicleId" }) || initialVehicle.id;
+  const selectedVehicle = vehicles.find((v) => v.id === vehicleId) || initialVehicle;
 
 
   const onSubmit = (data: BookingValues) => {

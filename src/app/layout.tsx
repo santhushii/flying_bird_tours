@@ -85,45 +85,68 @@ export const metadata: Metadata = {
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "TravelAgency",
-  "name": "Flying Bird Tours",
-  "image": "https://flyingbirdtours.com/logo-premium.png",
-  "url": "https://flyingbirdtours.com",
-  "telephone": "+94760448292",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Colombo Western Province",
-    "addressLocality": "Colombo",
-    "addressRegion": "Western Province",
-    "postalCode": "00100",
-    "addressCountry": "LK"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 6.9271,
-    "longitude": 79.8612
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "5.0",
-    "reviewCount": "184",
-    "bestRating": "5",
-    "worstRating": "1"
-  },
-  "openingHoursSpecification": {
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": [
-      "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
-    ],
-    "opens": "00:00",
-    "closes": "23:59"
-  },
-  "sameAs": [
-    "https://www.tripadvisor.com/Attraction_Review-g293962-d15147226-Reviews-Flying_Bird_Tours-Colombo_Western_Province.html",
-    "https://www.linkedin.com/in/flying-bird-tours-8597261a7/",
-    "https://wa.me/94760448292"
-  ],
-  "priceRange": "$$"
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://flyingbirdtours.com/#website",
+      "url": "https://flyingbirdtours.com",
+      "name": "Flying Bird Tours",
+      "description": "Sri Lanka Private Chauffeur & Island Tour Specialist",
+      "publisher": {
+        "@id": "https://flyingbirdtours.com/#organization"
+      }
+    },
+    {
+      "@type": "TravelAgency",
+      "@id": "https://flyingbirdtours.com/#organization",
+      "name": "Flying Bird Tours",
+      "alternateName": "Flying Bird Tours Sri Lanka",
+      "image": "https://flyingbirdtours.com/logo-premium.png",
+      "logo": "https://flyingbirdtours.com/logo-premium.png",
+      "url": "https://flyingbirdtours.com",
+      "telephone": "+94760448292",
+      "priceRange": "$$",
+      "currenciesAccepted": "USD, EUR, GBP, AUD, LKR",
+      "paymentAccepted": "Cash, Credit Card, Bank Transfer",
+      "areaServed": {
+        "@type": "Country",
+        "name": "Sri Lanka"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Colombo Western Province",
+        "addressLocality": "Colombo",
+        "addressRegion": "Western Province",
+        "postalCode": "00100",
+        "addressCountry": "LK"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 6.9271,
+        "longitude": 79.8612
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5.0",
+        "reviewCount": "184",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+        ],
+        "opens": "00:00",
+        "closes": "23:59"
+      },
+      "sameAs": [
+        "https://www.tripadvisor.com/Attraction_Review-g293962-d15147226-Reviews-Flying_Bird_Tours-Colombo_Western_Province.html",
+        "https://www.linkedin.com/in/flying-bird-tours-8597261a7/",
+        "https://wa.me/94760448292"
+      ]
+    }
+  ]
 };
 
 

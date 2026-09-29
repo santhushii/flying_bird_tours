@@ -1,7 +1,7 @@
-"use client";
-
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/home/Hero";
@@ -10,9 +10,26 @@ import { VehicleCard } from "@/components/vehicles/VehicleCard";
 import { vehicles } from "@/data/vehicles";
 import { TripPlanner } from "@/components/home/TripPlanner";
 import { TripAdvisorReviews } from "@/components/home/TripAdvisorReviews";
+import { FAQSection } from "@/components/home/FAQSection";
+import { faqsData } from "@/data/faqs";
 import { WhatsAppFloating } from "@/components/ui/WhatsAppFloating";
-
 import { ArrowRight, Compass, Sparkles } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Flying Bird Tours Sri Lanka | #1 Private Chauffeur & Island Tour Specialist",
+  description: "Experience the Pearl of the Indian Ocean with Flying Bird Tours Sri Lanka. Luxury private chauffeur cars, curated tea country & wildlife tours, 5.0 Star rated on TripAdvisor.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Flying Bird Tours Sri Lanka | #1 Rated Chauffeur & Private Tours",
+    description: "Book customized Sri Lanka tours with licensed private drivers. 5-Star TripAdvisor reviews, WhatsApp concierge, bespoke itineraries.",
+    url: "https://flyingbirdtours.com",
+    siteName: "Flying Bird Tours",
+    images: [{ url: "/logo-premium.png", width: 1200, height: 630, alt: "Flying Bird Tours Sri Lanka" }],
+    type: "website",
+  }
+};
 
 export default function Home() {
   return (
@@ -288,6 +305,29 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* FAQ Schema Markup for Google Search Rich Snippets */}
+      <Script
+        id="faq-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": faqsData.map((faq) => ({
+              "@type": "Question",
+              "name": faq.question,
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+              }
+            }))
+          })
+        }}
+      />
+
+      {/* Frequently Asked Questions */}
+      <FAQSection />
 
       {/* Full-Width Kandy CTA Banner */}
       <section className="relative h-[400px] sm:h-[480px] overflow-hidden">
