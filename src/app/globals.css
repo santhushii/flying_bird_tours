@@ -63,12 +63,15 @@ h1, h2, h3, h4, .font-display {
 
 /* Glassmorphism utility - Better for Light Mode */
 .glass {
-  @apply bg-white/70 backdrop-blur-xl border border-white/40 shadow-xl;
+  @apply bg-white/70 backdrop-blur-md border border-white/40 shadow-xl;
+  will-change: transform;
 }
 
 .glass-dark {
-  @apply bg-navy/90 backdrop-blur-3xl border border-white/10 shadow-3xl;
+  @apply bg-navy/90 backdrop-blur-lg border border-white/10 shadow-3xl;
+  will-change: transform;
 }
+
 
 /* Anti-gravity floating animation */
 @keyframes float {

@@ -6,8 +6,7 @@ export interface Vehicle {
   category: VehicleCategory;
   image: string;
   capacity: number;
-  pricePerKm: number;
-  pricePerDay: number;
   available: boolean;
   features: string[];
 }
+

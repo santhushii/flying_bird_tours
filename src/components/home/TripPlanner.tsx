@@ -2,9 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Compass, Palmtree, Mountain, Landmark, Map, Send, RefreshCw, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-
+import { Compass, Palmtree, Mountain, Landmark, RefreshCw, ChevronRight, MessageCircle } from "lucide-react";
 
 type Interest = "Beaches" | "Wildlife" | "Culture" | "Adventure" | "History";
 
@@ -16,7 +14,7 @@ const itineraryData: Record<string, string[]> = {
     "Day 4: Mirissa Beach & Whale Watching",
     "Day 5: Galle Fort & Departure"
   ],
-  "Heritage Explorer (7-10 Days)": [
+  "Heritage Explorer (7-14 Days)": [
     "Day 1: Arrival in Negombo",
     "Day 2: Sigiriya Rock Fortress",
     "Day 3: Polonnaruwa Ancient City",
@@ -26,7 +24,25 @@ const itineraryData: Record<string, string[]> = {
     "Day 8-9: Yala Safari & Wildlife",
     "Day 10: Departure from Galle"
   ],
+  "Grand Tour (14+ Days)": [
+    "Day 1-2: Colombo & Negombo",
+    "Day 3-4: Sigiriya & Dambulla Cave Temple",
+    "Day 5-6: Polonnaruwa & Anuradhapura",
+    "Day 7-8: Kandy & Temple of the Tooth",
+    "Day 9-10: Tea Trails & Ella Highlands",
+    "Day 11-12: Yala National Park Safari",
+    "Day 13-14: Mirissa Whale Watching",
+    "Day 15+: Galle Fort & Unawatuna Beach"
+  ],
 };
+
+const PHONE = "94760448292";
+
+function makeWhatsAppUrl(itinerary: string[], duration: string) {
+  const lines = itinerary.join(" | ");
+  const msg = `Hello Flying Bird Tours! I used your AI Trip Navigator and would like to book this ${duration} Sri Lanka itinerary:\n${lines}\n\nPlease share pricing and availability.`;
+  return `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
+}
 
 export function TripPlanner() {
   const [step, setStep] = useState(1);
@@ -36,8 +52,8 @@ export function TripPlanner() {
   const [loading, setLoading] = useState(false);
 
   const toggleInterest = (interest: Interest) => {
-    setInterests(prev => 
-      prev.includes(interest) 
+    setInterests(prev =>
+      prev.includes(interest)
         ? prev.filter(i => i !== interest)
         : [...prev, interest]
     );
@@ -46,149 +62,200 @@ export function TripPlanner() {
   const generateTrip = () => {
     setLoading(true);
     setTimeout(() => {
-      setResult(itineraryData[duration === "3-5 Days" ? "Short & Sweet (3-5 Days)" : "Heritage Explorer (7-10 Days)"]);
+      const key =
+        duration === "3-5 Days"
+          ? "Short & Sweet (3-5 Days)"
+          : duration === "7-14 Days"
+          ? "Heritage Explorer (7-14 Days)"
+          : "Grand Tour (14+ Days)";
+      setResult(itineraryData[key]);
       setLoading(false);
       setStep(3);
     }, 1500);
   };
 
-  return (
-    <div className="glass bg-white/95 p-10 md:p-16 rounded-[4rem] border border-navy/5 shadow-3xl max-w-5xl mx-auto min-h-[600px] flex flex-col justify-center relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-64 h-64 bg-purple/5 rounded-full blur-3xl -mr-32 -mt-32" />
-      <div className="absolute bottom-0 left-0 w-64 h-64 bg-navy/5 rounded-full blur-3xl -ml-32 -mb-32" />
-      
-      <AnimatePresence mode="wait">
-        {step === 1 && (
-          <motion.div 
-            key="step1"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.05 }}
-            className="text-center relative z-10"
-          >
-            <div className="w-24 h-24 bg-purple/10 rounded-[2.5rem] flex items-center justify-center mx-auto mb-10 shadow-xl shadow-purple/5">
-               <Compass className="w-12 h-12 text-purple animate-spin-slow" />
-            </div>
-            <h2 className="text-4xl md:text-5xl font-display font-black text-navy mb-4 tracking-tight">How long are you staying?</h2>
-            <p className="text-navy/40 mb-12 tracking-[0.3em] uppercase font-bold text-xs">Choose your trip duration</p>
-            
-            <div className="flex flex-wrap justify-center gap-6">
-              {["3-5 Days", "7-14 Days", "14+ Days"].map(d => (
-                <button
-                  key={d}
-                  onClick={() => { setDuration(d); setStep(2); }}
-                  className="px-10 py-6 rounded-3xl border border-navy/5 bg-white hover:border-purple hover:text-purple shadow-sm hover:shadow-xl hover:shadow-purple/10 transition-all font-bold text-2xl group"
-                >
-                  <span className="text-navy group-hover:text-purple">{d}</span>
-                </button>
-              ))}
-            </div>
-          </motion.div>
-        )}
+  const reset = () => { setInterests([]); setResult(null); setStep(1); };
 
-        {step === 2 && (
-          <motion.div 
-            key="step2"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            className="text-center relative z-10"
+  return (
+    <div className="bg-white rounded-2xl sm:rounded-3xl border border-gray-200 shadow-xl overflow-hidden">
+
+      {/* Progress Bar */}
+      <div className="flex border-b border-gray-100">
+        {[1, 2, 3].map(s => (
+          <div
+            key={s}
+            className={`flex-1 h-1.5 transition-colors duration-500 ${
+              step >= s ? "bg-purple" : "bg-gray-100"
+            }`}
+          />
+        ))}
+      </div>
+
+      {/* Step Label */}
+      <div className="px-5 sm:px-8 pt-5 pb-3 flex items-center justify-between">
+        <span className="text-[10px] font-black uppercase tracking-[0.25em] text-purple">
+          Step {step} of 3
+        </span>
+        {step > 1 && (
+          <button
+            onClick={reset}
+            className="text-[10px] font-bold uppercase tracking-widest text-navy/40 hover:text-purple transition-colors flex items-center gap-1.5"
           >
-            <h2 className="text-4xl md:text-5xl font-display font-black text-navy mb-4 tracking-tight">What interests you?</h2>
-            <p className="text-navy/40 mb-12 tracking-[0.3em] uppercase font-bold text-xs">Select multiple categories</p>
-            
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-16">
-               {[
-                 { id: "Beaches", Icon: Palmtree },
-                 { id: "Wildlife", Icon: Compass },
-                 { id: "Culture", Icon: Landmark },
-                 { id: "Adventure", Icon: Mountain },
-                 { id: "History", Icon: RefreshCw },
-               ].map(({id, Icon}) => (
-                 <button
+            <RefreshCw size={11} /> Start Over
+          </button>
+        )}
+      </div>
+
+      {/* Content Area */}
+      <div className="px-5 sm:px-8 pb-8 min-h-[380px] sm:min-h-[420px] flex flex-col justify-center">
+        <AnimatePresence mode="wait">
+
+          {/* ── Step 1: Duration ── */}
+          {step === 1 && (
+            <motion.div
+              key="step1"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.25 }}
+              className="text-center"
+            >
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-purple/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Compass className="w-8 h-8 sm:w-10 sm:h-10 text-purple" style={{ animation: "spin 8s linear infinite" }} />
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-display font-black text-navy mb-1.5 tracking-tight">
+                How long are you staying?
+              </h3>
+              <p className="text-navy/45 mb-8 text-xs font-bold uppercase tracking-[0.25em]">
+                Choose your trip duration
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 max-w-2xl mx-auto">
+                {["3-5 Days", "7-14 Days", "14+ Days"].map(d => (
+                  <button
+                    key={d}
+                    onClick={() => { setDuration(d); setStep(2); }}
+                    className="group w-full px-5 py-5 rounded-2xl border-2 border-gray-200 bg-white hover:border-purple hover:shadow-lg hover:shadow-purple/10 transition-all font-bold text-lg text-navy hover:text-purple cursor-pointer"
+                  >
+                    {d}
+                    <div className="text-[10px] font-medium text-navy/40 group-hover:text-purple/60 mt-0.5 tracking-wide">
+                      {d === "3-5 Days" ? "Quick escape" : d === "7-14 Days" ? "Classic tour" : "Grand journey"}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* ── Step 2: Interests ── */}
+          {step === 2 && (
+            <motion.div
+              key="step2"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.25 }}
+              className="text-center"
+            >
+              <h3 className="text-2xl sm:text-3xl font-display font-black text-navy mb-1.5 tracking-tight">
+                What interests you?
+              </h3>
+              <p className="text-navy/45 mb-7 text-xs font-bold uppercase tracking-[0.25em]">
+                Select multiple categories
+              </p>
+
+              <div className="grid grid-cols-3 sm:grid-cols-5 gap-3 mb-8 max-w-xl mx-auto sm:max-w-none">
+                {[
+                  { id: "Beaches", Icon: Palmtree },
+                  { id: "Wildlife", Icon: Compass },
+                  { id: "Culture", Icon: Landmark },
+                  { id: "Adventure", Icon: Mountain },
+                  { id: "History", Icon: RefreshCw },
+                ].map(({ id, Icon }) => (
+                  <button
                     key={id}
                     onClick={() => toggleInterest(id as Interest)}
-                    className={`flex flex-col items-center gap-6 p-8 rounded-[2.5rem] border transition-all ${
-                      interests.includes(id as Interest) 
-                        ? "bg-purple border-purple shadow-2xl shadow-purple/30 scale-105 text-white" 
-                        : "bg-white border-navy/5 text-navy/40 hover:border-purple hover:text-purple hover:shadow-xl shadow-sm"
+                    className={`flex flex-col items-center gap-3 py-5 px-2 rounded-2xl border-2 transition-all cursor-pointer ${
+                      interests.includes(id as Interest)
+                        ? "bg-purple border-purple shadow-lg shadow-purple/25 text-white scale-[1.04]"
+                        : "bg-white border-gray-200 text-navy/50 hover:border-purple/50 hover:text-purple hover:shadow-md"
                     }`}
-                 >
-                    <Icon size={36} />
-                    <span className="font-extrabold uppercase tracking-widest text-[10px]">{id}</span>
-                 </button>
-               ))}
-            </div>
-
-            <button
-               onClick={generateTrip}
-               disabled={interests.length === 0 || loading}
-               className="bg-navy text-white px-16 py-6 rounded-3xl font-bold text-xl hover:scale-105 active:scale-95 disabled:opacity-50 transition-all flex items-center mx-auto gap-4 shadow-2xl shadow-navy/20"
-            >
-               {loading ? <RefreshCw className="animate-spin" /> : "GENERATE ITINERARY"}
-               <ChevronRight size={24} />
-            </button>
-          </motion.div>
-        )}
-
-        {step === 3 && result && (
-          <motion.div 
-            key="step3"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="relative z-10"
-          >
-             <div className="flex justify-between items-end mb-12 border-b border-navy/5 pb-8">
-                <div>
-                  <h2 className="text-4xl md:text-5xl font-display font-black text-navy mb-3 tracking-tight">Your Perfect Trip</h2>
-                  <p className="text-purple font-extrabold text-[10px] tracking-[0.4em] uppercase">Sri Lanka: {duration} Voyage</p>
-                </div>
-                <button 
-                   onClick={() => { setInterests([]); setStep(1); }}
-                   className="text-navy/30 hover:text-purple transition-colors flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-navy/5 px-6 py-3 rounded-full"
-                >
-                   <RefreshCw size={14} /> Start Over
-                </button>
-             </div>
-
-             <div className="space-y-8 pl-4">
-                {result.map((item, i) => (
-                   <motion.div
-                     key={i}
-                     initial={{ opacity: 0, x: -20 }}
-                     animate={{ opacity: 1, x: 0 }}
-                     transition={{ delay: i * 0.1 }}
-                     className="flex gap-8 group"
-                   >
-                     <div className="flex flex-col items-center pt-1.5">
-                        <div className="w-4 h-4 rounded-full bg-purple border-4 border-white shadow-lg ring-4 ring-purple/5 group-hover:scale-125 transition-transform" />
-                        {i !== result.length - 1 && <div className="w-0.5 h-full bg-navy/5 mt-2 min-h-[40px]" />}
-                     </div>
-                     <div className="text-navy/70 group-hover:text-navy transition-colors font-bold text-xl py-0.5 tracking-tight">
-                        {item}
-                     </div>
-                   </motion.div>
+                  >
+                    <Icon size={26} />
+                    <span className="font-bold uppercase tracking-widest text-[9px] sm:text-[10px] leading-none">{id}</span>
+                  </button>
                 ))}
-             </div>
+              </div>
 
-             <div className="mt-20 flex flex-col md:flex-row gap-6">
-                <button 
-                  onClick={() => window.location.href = "/book"}
-                  className="bg-purple text-white flex-1 py-6 rounded-3xl font-black tracking-widest uppercase text-xs hover:bg-purple/90 transition-all flex items-center justify-center gap-3 shadow-2xl shadow-purple/20"
+              <button
+                onClick={generateTrip}
+                disabled={interests.length === 0 || loading}
+                className="w-full sm:w-auto bg-navy text-white px-10 py-4 rounded-2xl font-bold text-sm hover:bg-purple disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center mx-auto gap-3 shadow-lg cursor-pointer"
+              >
+                {loading ? (
+                  <><RefreshCw className="animate-spin" size={16} /> Generating...</>
+                ) : (
+                  <>GENERATE ITINERARY <ChevronRight size={18} /></>
+                )}
+              </button>
+            </motion.div>
+          )}
+
+          {/* ── Step 3: Result ── */}
+          {step === 3 && result && (
+            <motion.div
+              key="step3"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="mb-6 pb-5 border-b border-gray-100">
+                <h3 className="text-2xl sm:text-3xl font-display font-black text-navy tracking-tight">Your Perfect Trip</h3>
+                <p className="text-purple font-extrabold text-[10px] tracking-[0.3em] uppercase mt-1">Sri Lanka &bull; {duration} Voyage</p>
+              </div>
+
+              <div className="space-y-4 mb-8 pl-1">
+                {result.map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.07 }}
+                    className="flex gap-4 group"
+                  >
+                    <div className="flex flex-col items-center pt-1.5 shrink-0">
+                      <div className="w-3.5 h-3.5 rounded-full bg-purple border-2 border-white shadow ring-2 ring-purple/20 group-hover:scale-110 transition-transform" />
+                      {i !== result.length - 1 && <div className="w-px flex-1 bg-gray-200 mt-1.5 min-h-[28px]" />}
+                    </div>
+                    <p className="text-navy/75 group-hover:text-navy transition-colors font-semibold text-sm sm:text-base py-0.5 leading-snug">
+                      {item}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3">
+                <a
+                  href={makeWhatsAppUrl(result, duration)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-2.5 bg-[#25D366] hover:bg-[#1ebd59] text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition-all shadow-lg shadow-green-500/20 cursor-pointer"
                 >
-                   BOOK THIS TRIP
-                   <Map size={20} />
-                </button>
-                <button 
+                  <MessageCircle size={17} />
+                  BOOK ON WHATSAPP
+                </a>
+                <button
                   onClick={() => setStep(2)}
-                  className="bg-navy text-white flex-1 py-6 rounded-3xl font-black tracking-widest uppercase text-xs hover:bg-navy/90 transition-all shadow-2xl shadow-navy/20"
+                  className="flex-1 flex items-center justify-center gap-2 bg-navy hover:bg-purple text-white py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition-all shadow-lg cursor-pointer"
                 >
-                   CUSTOMIZE FURTHER
+                  CUSTOMIZE FURTHER
                 </button>
-             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              </div>
+            </motion.div>
+          )}
+
+        </AnimatePresence>
+      </div>
     </div>
   );
 }

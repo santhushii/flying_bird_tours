@@ -1,35 +1,38 @@
-<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <!-- Navy Crescent -->
+<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Outer Crescent / Frame - Navy -->
   <path
-    d="M20,50 C20,75 50,90 85,75 C70,95 30,90 15,60 C5,30 25,5 60,5 C40,5 15,20 15,50 C15,75 40,85 65,80"
-    fill="none"
+    d="M33 5C22 10 7 24 7 50C7 78 30 95 65 92C85 91 97 75 97 58"
     stroke="#2D2A4E"
     stroke-width="6"
     stroke-linecap="round"
   />
   
-  <!-- Bird Head & Chest - Red (pointing left) -->
+  <!-- Tail Feathers - Navy -->
   <path
-    d="M25,35 C20,35 15,40 15,45 C15,50 20,60 30,70 L35,65 C30,55 25,45 25,35 Z"
+    d="M40 58C55 58 70 65 80 88C65 78 50 72 40 75"
+    fill="#2D2A4E"
+  />
+  <path
+    d="M42 65C60 65 72 75 78 100C60 85 45 78 42 82"
+    fill="#2D2A4E"
+  />
+
+  <!-- Bird Head & Breast - Red -->
+  <path
+    d="M25 31C18 31 16 34 20 40C24 45 28 55 48 80C42 65 38 45 35 38"
     fill="#E32F2F"
   />
-  
-  <!-- Main Wing - Purple -->
+  <circle cx="19" cy="32" r="1.5" fill="white" />
+
+  <!-- Top Wing - Purple -->
   <path
-    d="M32,45 C35,20 50,10 65,15 C55,25 45,45 35,60 Z"
+    d="M26 38C28 15 45 5 45 5C45 5 43 15 43 28C43 45 35 55 26 58V38Z"
     fill="#8B3A8E"
   />
   
-  <!-- Secondary Wing - Purple -->
+  <!-- Bottom Wing - Purple -->
   <path
-    d="M35,50 C45,35 65,25 80,30 C70,40 55,60 40,75 Z"
-    fill="#8B3A8E"
-    fill-opacity="0.8"
-  />
-  
-  <!-- Tail feathers - Purple -->
-  <path
-    d="M45,75 C60,70 75,75 85,90 C75,85 60,82 50,85 Z"
+    d="M31 45C40 25 65 20 70 25C60 30 50 48 40 58C35 52 31 48 31 45Z"
     fill="#8B3A8E"
   />
 </svg>

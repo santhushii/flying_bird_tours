@@ -1,337 +1,341 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Image from "next/image";
-import { FlyingBirdLogo } from "@/components/ui/FlyingBirdLogo";
+import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/home/Hero";
+import { IslandClimate } from "@/components/home/IslandClimate";
 import { VehicleCard } from "@/components/vehicles/VehicleCard";
 import { vehicles } from "@/data/vehicles";
 import { TripPlanner } from "@/components/home/TripPlanner";
-import { MapPin, Map, Car, Star, Quote, Mail, Phone, Instagram, Compass, ArrowRight } from "lucide-react";
+import { TripAdvisorReviews } from "@/components/home/TripAdvisorReviews";
+import { WhatsAppFloating } from "@/components/ui/WhatsAppFloating";
+
+import { ArrowRight, Compass, Sparkles } from "lucide-react";
 
 export default function Home() {
-  const fadeInUp = {
-    initial: { opacity: 0, y: 40 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.8, ease: "easeOut" }
-  };
-
-  const stagger = {
-    initial: { opacity: 0 },
-    whileInView: { opacity: 1 },
-    viewport: { once: true },
-    transition: { staggerChildren: 0.1, delayChildren: 0.2 }
-  };
-
   return (
-    <main className="min-h-screen overflow-x-hidden bg-white">
+    <main className="min-h-screen overflow-x-hidden bg-white selection:bg-purple/20 selection:text-purple">
+      {/* Clean Global Navbar */}
       <Navbar />
+
+      {/* Hero Section */}
       <Hero />
       
       {/* Featured Destinations Section */}
-      <motion.section 
-        className="py-32 bg-white relative z-10"
-        initial="initial"
-        whileInView="whileInView"
-        viewport={{ once: true, margin: "-100px" }}
-      >
-        <div className="container mx-auto px-6">
-          <motion.div variants={fadeInUp} className="flex flex-col items-center gap-4 mb-20 text-center">
-             <span className="text-purple font-display font-extrabold tracking-[0.4em] uppercase text-xs">Explore Paradise</span>
-             <h2 className="text-5xl md:text-8xl font-display font-black text-navy leading-tight tracking-tighter uppercase">OUR FEATURED <br /> DESTINATIONS</h2>
-             <div className="w-24 h-1.5 bg-purple mt-6 rounded-full" />
-             <p className="text-center text-navy/50 max-w-2xl mt-10 leading-relaxed text-xl font-medium">
-               Explore the hidden gems and iconic landmarks of the pearl of the Indian Ocean.
-             </p>
-          </motion.div>
+      <section className="py-20 lg:py-28 bg-white relative z-10 border-b border-gray-100">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-14 lg:mb-18">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-purple/10 border border-purple/20 text-purple text-xs font-bold uppercase tracking-wider mb-4">
+              <Compass size={14} />
+              <span>Iconic Sri Lanka Highlights</span>
+            </div>
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-display font-black text-navy leading-tight tracking-tight uppercase">
+              OUR FEATURED <span className="text-purple">DESTINATIONS</span>
+            </h2>
+            <div className="w-16 h-1 bg-purple mt-4 rounded-full" />
+            <p className="text-navy/70 max-w-2xl mt-5 leading-relaxed text-base sm:text-lg font-medium">
+              Explore the timeless heritage citadels, misty tea highlands, and golden beaches of the pearl of the Indian Ocean.
+            </p>
+          </div>
           
-          <motion.div 
-            variants={stagger}
-            className="grid grid-cols-1 md:grid-cols-3 gap-10"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             {[
-              { name: "Ella", type: "Misty Highlands", img: "/destinations/ella.png" }, 
-              { name: "Galle", type: "Colonial Heritage", img: "/destinations/galle.png" }, 
-              { name: "Sigiriya", type: "Ancient Wonder", img: "/destinations/sigiriya.png" } 
+              { 
+                name: "Ella Highlands", 
+                type: "Misty Tea Estates & Nine Arch Bridge", 
+                img: "/destinations/ella.png",
+                href: "/destinations"
+              }, 
+              { 
+                name: "Galle Fort", 
+                type: "UNESCO Living Colonial Heritage", 
+                img: "/destinations/galle.png",
+                href: "/destinations"
+              }, 
+              { 
+                name: "Sigiriya Citadel", 
+                type: "Ancient 5th Century Rock Wonder", 
+                img: "/destinations/sigiriya.png",
+                href: "/destinations"
+              } 
             ].map((dst, i) => (
-              <motion.div 
-                key={i} 
-                variants={fadeInUp}
-                className="group relative h-[500px] rounded-[3rem] overflow-hidden shadow-2xl hover:shadow-purple/20 transition-all duration-700"
+              <div 
+                key={i}
+                className="group relative h-[500px] sm:h-[560px] rounded-3xl overflow-hidden shadow-xl flex flex-col justify-end p-7 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1"
               >
                 <Image 
                   src={dst.img} 
-                  alt={dst.name}
+                  alt={`${dst.name} - ${dst.type}`}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="absolute inset-0 object-cover w-full h-full brightness-[0.85] group-hover:scale-105 transition-transform duration-1000" 
+                  className="absolute inset-0 object-cover w-full h-full brightness-100 transition-transform duration-700 group-hover:scale-110" 
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-transparent to-transparent opacity-80" />
-                <div className="absolute bottom-10 left-10 right-10">
-                   <h3 className="text-3xl font-display font-bold text-white mb-2">{dst.name}</h3>
-                   <p className="text-white/70 text-xs mb-6 font-bold tracking-[0.2em] uppercase">{dst.type}</p>
-                   <button className="text-white font-bold text-[10px] tracking-[0.2em] uppercase border-b border-white/30 pb-1 hover:border-white transition-all">
-                     EXPLORE DESTINATION
-                   </button>
+                {/* Lighter overlay so image is clearly visible */}
+                <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/20 to-transparent" />
+                {/* Top badge */}
+                <div className="absolute top-5 left-5 bg-purple/80 backdrop-blur-sm text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider z-10">
+                  {dst.type}
                 </div>
-              </motion.div>
+                
+                <div className="relative z-10">
+                  <h3 className="text-3xl sm:text-4xl font-display font-bold text-white mb-4 drop-shadow-lg">
+                    {dst.name}
+                  </h3>
+                  <Link 
+                    href={dst.href}
+                    className="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-bold text-xs uppercase tracking-widest px-4 py-2.5 rounded-xl transition-all border border-white/30 hover:border-white/60"
+                  >
+                    <span>Explore Destination</span>
+                    <ArrowRight size={13} />
+                  </Link>
+                </div>
+              </div>
             ))}
-          </motion.div>
+          </div>
+
+          <div className="mt-12 text-center">
+            <Link 
+              href="/destinations"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-navy hover:bg-purple text-white text-xs font-bold uppercase tracking-wider transition-colors shadow-md"
+            >
+              <span>View All Sri Lanka Destinations</span>
+              <ArrowRight size={14} />
+            </Link>
+          </div>
         </div>
-      </motion.section>
+      </section>
+
+      {/* Prominent, Dedicated Island Climate Section */}
+      <IslandClimate />
+
+      {/* Full-Width Immersive Mirissa Image Banner */}
+      <section className="relative h-[460px] sm:h-[560px] lg:h-[640px] overflow-hidden">
+        <Image
+          src="/destinations/mirissa.png"
+          alt="Mirissa Beach - Sri Lanka's Pristine Southern Coast"
+          fill
+          sizes="100vw"
+          className="object-cover object-center brightness-90"
+        />
+        {/* Dark overlay for readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-navy/85 via-navy/50 to-transparent" />
+        <div className="absolute inset-0 flex items-center">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-xl">
+              <span className="inline-block px-4 py-1.5 bg-gold/20 border border-gold/40 text-gold text-xs font-bold uppercase tracking-widest rounded-full mb-5">
+                South Coast Paradise
+              </span>
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-display font-black text-white leading-tight mb-4 drop-shadow-xl">
+                WHERE THE OCEAN <br />
+                <span className="text-gold italic font-serif font-normal">Meets Serenity</span>
+              </h2>
+              <p className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 font-medium">
+                From Mirissa&#39;s blue whale watching to Galle&#39;s colonial ramparts — discover Sri Lanka&#39;s breathtaking southern coast with your private chauffeur.
+              </p>
+              <Link 
+                href="/destinations"
+                className="inline-flex items-center gap-2.5 bg-purple hover:bg-purple/90 text-white px-8 py-4 rounded-xl font-bold shadow-lg shadow-purple/30 transition-all text-sm uppercase tracking-wide"
+              >
+                <span>Discover Destinations</span>
+                <ArrowRight size={16} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Trip Planner Section */}
-      <motion.section 
-        className="py-32 relative bg-background overflow-hidden"
-        initial="initial"
-        whileInView="whileInView"
-        viewport={{ once: true }}
-      >
-        <div className="container mx-auto px-6">
-           <motion.div variants={fadeInUp} className="flex flex-col items-center mb-24 text-center">
-              <span className="text-primary font-display font-bold tracking-[0.3em] uppercase mb-6 text-sm">Intelligent Planning</span>
-              <h2 className="text-5xl md:text-8xl font-display font-bold leading-tight tracking-tighter">AI TRIP <br /> <span className="text-gold">NAVIGATOR</span></h2>
-           </motion.div>
-           <motion.div variants={fadeInUp} transition={{ delay: 0.3 }}>
-             <TripPlanner />
-           </motion.div>
+      <section className="py-20 lg:py-28 relative bg-slate-50 border-b border-gray-200/80">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-center mb-14 text-center max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-purple/10 border border-purple/20 text-purple text-xs font-bold uppercase tracking-wider mb-4">
+              <Sparkles size={14} />
+              <span>Smart Itinerary Generator</span>
+            </div>
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-display font-black text-navy leading-tight tracking-tight uppercase">
+              AI TRIP <span className="text-purple">NAVIGATOR</span>
+            </h2>
+            <p className="mt-4 text-navy/70 text-base sm:text-lg font-medium">
+              Tell us your preferred vacation length and interests to generate a tailored, route-optimized Sri Lankan journey in seconds.
+            </p>
+          </div>
+
+          <TripPlanner />
         </div>
-        <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-primary/20 blur-[150px] rounded-full -translate-x-1/2 -translate-y-1/2 animate-float" />
-        <div className="absolute top-1/4 right-0 w-[400px] h-[400px] bg-gold/15 blur-[120px] rounded-full translate-x-1/2 animate-float" style={{ animationDelay: "2s" }} />
-      </motion.section>
+      </section>
 
       {/* Vehicle Showcase Section */}
-      <motion.section 
-        className="py-32 bg-ivory/50"
-        initial="initial"
-        whileInView="whileInView"
-        viewport={{ once: true }}
-      >
-        <div className="container mx-auto px-6">
-           <motion.div variants={fadeInUp} className="flex flex-col md:flex-row justify-between items-end gap-12 mb-24">
-              <div className="flex flex-col gap-6">
-                 <span className="text-purple font-display font-bold tracking-[0.3em] uppercase text-sm">Your Ride</span>
-                 <h2 className="text-5xl md:text-7xl font-display font-semibold text-navy leading-tight tracking-tighter">LUXURY FLEET <br /> <span className="text-purple italic">SELECTION</span></h2>
-              </div>
-              <p className="text-navy/50 max-w-md text-left leading-relaxed text-lg font-medium">
-                 Choose the perfect vehicle for your adventure. From luxury sedans to spacious mini-buses, we define comfort.
-              </p>
-           </motion.div>
+      <section className="py-20 lg:py-28 bg-white border-b border-gray-200">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-14">
+            <div>
+              <span className="text-purple font-display font-bold tracking-wider uppercase text-xs block mb-2">
+                Private Transport Fleet
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-display font-black text-navy leading-tight tracking-tight uppercase">
+                LUXURY FLEET <span className="text-purple italic font-serif font-normal">SELECTION</span>
+              </h2>
+            </div>
+            <p className="text-navy/70 max-w-md text-sm sm:text-base leading-relaxed font-medium">
+              Choose the ideal vehicle for your holiday. From fuel-efficient sedans to luxury executive vans and group minibuses with licensed chauffeurs.
+            </p>
+          </div>
 
-           <motion.div 
-             variants={stagger}
-             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
-           >
-              {vehicles.map((v) => (
-                <motion.div key={v.id} variants={fadeInUp}>
-                  <VehicleCard vehicle={v} />
-                </motion.div>
-              ))}
-           </motion.div>
-           
-           <motion.div variants={fadeInUp} className="mt-24 flex justify-center">
-              <motion.button 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-primary hover:bg-primary/90 text-white px-12 py-5 rounded-full font-bold shadow-2xl shadow-primary/30 transition-all text-lg tracking-wide"
-              >
-                 VIEW ALL VEHICLES
-              </motion.button>
-           </motion.div>
-        </div>
-      </motion.section>
-
-      {/* Review System Section */}
-      <motion.section 
-        className="py-40 bg-white relative overflow-hidden"
-        initial="initial"
-        whileInView="whileInView"
-        viewport={{ once: true }}
-      >
-         <div className="absolute inset-0 opacity-[0.05] pointer-events-none">
-            <svg width="100%" height="100%">
-               <pattern id="heritage-pattern-v2" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
-                  <path d="M60 0 L120 60 L60 120 L0 60 Z" fill="none" stroke="currentColor" strokeWidth="1" />
-                  <circle cx="60" cy="60" r="15" fill="none" stroke="currentColor" strokeWidth="1" />
-               </pattern>
-               <rect width="100%" height="100%" fill="url(#heritage-pattern-v2)" />
-            </svg>
-         </div>
-
-         <div className="container mx-auto px-6 relative z-10">
-            <motion.div variants={fadeInUp} className="flex flex-col items-center mb-24 text-center">
-               <span className="text-primary font-display font-bold tracking-[0.4em] uppercase mb-6 text-sm">Social Proof</span>
-               <h2 className="text-5xl md:text-8xl font-display font-bold tracking-tighter">GUEST <span className="text-gold">EXPERIENCES</span></h2>
-               <div className="flex gap-3 mt-8 text-gold">
-                  {[1,2,3,4,5].map(i => <Star key={i} fill="currentColor" size={24} />)}
-               </div>
-            </motion.div>
-
-            <motion.div 
-              variants={stagger}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
+          {/* Vehicle Cards Grid - Completely stable and clean */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {vehicles.map((v) => (
+              <VehicleCard key={v.id} vehicle={v} />
+            ))}
+          </div>
+          
+          <div className="mt-14 flex justify-center">
+            <Link 
+              href="/vehicles"
+              className="bg-navy hover:bg-purple text-white px-8 py-4 rounded-xl font-bold shadow-md transition-colors text-xs tracking-wider uppercase flex items-center gap-2 cursor-pointer"
             >
-               {[
-                 { 
-                   name: "Sarah Jenkins", 
-                   country: "Australia", 
-                   text: "The best tour agency in Sri Lanka! The driver was so professional and the car was immaculate. Our trip to Sigiriya was magical.",
-                   avatar: "https://i.pravatar.cc/150?u=sarah"
-                 },
-                 { 
-                   name: "David Mueller", 
-                   country: "Germany", 
-                   text: "Amazing service! The AI planner helped us find hidden gems we wouldn't have discovered otherwise. Highly recommended.",
-                   avatar: "https://i.pravatar.cc/150?u=david"
-                 },
-                 { 
-                   name: "Lakshan Perera", 
-                   country: "Local Guide", 
-                   text: "As someone who knows the island, I can say Flying Bird truly captures the essence of our culture in their service.",
-                   avatar: "https://i.pravatar.cc/150?u=lakshan"
-                 }
-               ].map((review, i) => (
-                 <motion.div 
-                   key={i} 
-                   variants={fadeInUp}
-                   className="glass p-12 rounded-[3.5rem] border border-white/5 shadow-xl hover:border-primary/40 transition-all group relative overflow-hidden"
-                 >
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-[100px] -z-10 group-hover:bg-primary/10 transition-colors" />
-                    <Quote className="text-primary mb-8 w-10 h-10 group-hover:rotate-12 transition-transform" />
-                    <p className="text-foreground/80 italic mb-10 leading-relaxed text-lg">"{review.text}"</p>
-                    <div className="flex items-center gap-5">
-                       <img src={review.avatar} className="w-14 h-14 rounded-full border-2 border-primary/20 shadow-lg" alt={review.name} />
-                       <div>
-                          <span className="block font-bold text-lg">{review.name}</span>
-                          <span className="text-xs text-primary font-bold uppercase tracking-widest leading-none">{review.country}</span>
-                       </div>
-                    </div>
-                 </motion.div>
-               ))}
-            </motion.div>
-         </div>
-      </motion.section>
+              <span>Explore Complete Fleet &amp; Specifications</span>
+              <ArrowRight size={14} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+
+      {/* Review System Section - TripAdvisor Official Integration */}
+      <TripAdvisorReviews />
 
       {/* Blog System Preview */}
-      <motion.section 
-        className="py-40 bg-ivory/30 relative overflow-hidden"
-        initial="initial"
-        whileInView="whileInView"
-        viewport={{ once: true }}
-      >
-        <div className="container mx-auto px-6">
-           <motion.div variants={fadeInUp} className="flex flex-col md:flex-row justify-between items-end gap-12 mb-24 relative z-20">
-              <div className="flex flex-col gap-6">
-                 <span className="text-primary font-display font-bold tracking-[0.3em] uppercase text-sm">Travel Insights</span>
-                 <h2 className="text-5xl md:text-8xl font-display font-bold tracking-tighter leading-tight">LATEST FROM <br /> <span className="text-gold">OUR BLOG</span></h2>
-              </div>
-              <motion.button 
-                whileHover={{ x: 5 }}
-                className="flex items-center gap-4 group text-sm font-bold tracking-[0.3em] uppercase"
-                onClick={() => window.location.href = '/blog'}
+      <section className="py-20 lg:py-28 bg-slate-50 border-t border-gray-200">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-14">
+            <div>
+              <span className="text-purple font-display font-bold tracking-wider uppercase text-xs block mb-2">
+                Travel Journal
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-display font-black text-navy tracking-tight uppercase">
+                LATEST FROM <span className="text-purple">OUR JOURNAL</span>
+              </h2>
+            </div>
+            <Link 
+              href="/blog"
+              className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-purple hover:text-navy transition-colors"
+            >
+              <span>Read All Articles</span>
+              <ArrowRight size={14} />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {[
+              { 
+                title: "Top 10 Hidden Waterfalls in Ella", 
+                category: "Travel Tips", 
+                date: "April 12, 2026", 
+                img: "/blog/waterfall.png", 
+                slug: "top-10-waterfalls" 
+              },
+              { 
+                title: "Whale Watching in Mirissa: A Complete Guide", 
+                category: "Wildlife", 
+                date: "January 15, 2026", 
+                img: "/blog/whale.png", 
+                slug: "whale-watching" 
+              },
+              { 
+                title: "The Cultural Triangle: Visiting Ancient Cities", 
+                category: "Culture", 
+                date: "July 20, 2026", 
+                img: "/blog/kandy.png", 
+                slug: "kandy-perahera" 
+              }
+            ].map((post, i) => (
+              <Link 
+                key={i} 
+                href={`/blog/${post.slug}`}
+                className="group bg-white rounded-3xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
               >
-                 READ ALL POSTS
-                 <div className="w-16 h-16 rounded-full border border-navy/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all group-hover:border-primary shadow-xl bg-white">
-                    <Compass size={24} />
-                 </div>
-              </motion.button>
-           </motion.div>
-           
-           <motion.h2 
-             variants={fadeInUp} 
-             className="text-[12rem] md:text-[20rem] font-display font-black text-primary/5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 leading-none select-none z-0 pointer-events-none whitespace-nowrap opacity-30"
-           >
-             OUR BLOG
-           </motion.h2>
+                <div>
+                  <div className="relative h-72 w-full bg-slate-100 overflow-hidden">
+                    <Image 
+                      src={post.img} 
+                      alt={post.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute top-3.5 left-3.5 bg-navy/90 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                      {post.category}
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-display font-bold text-navy group-hover:text-purple transition-colors mb-2 leading-snug">
+                      {post.title}
+                    </h3>
+                  </div>
+                </div>
 
-           <motion.div 
-             variants={stagger}
-             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 relative z-10"
-           >
-              {[
-                { 
-                  title: "Top 10 Hidden Waterfalls", 
-                  category: "Travel Tips", 
-                  date: "April 12, 2026", 
-                  img: "/blog/waterfall.png", 
-                  slug: "top-10-waterfalls" 
-                },
-                { 
-                  title: "A Guide to Kandy Perahera", 
-                  category: "Culture", 
-                  date: "July 20, 2026", 
-                  img: "/blog/kandy.png", 
-                  slug: "kandy-perahera" 
-                },
-                { 
-                  title: "Whale Watching in Mirissa", 
-                  category: "Wildlife", 
-                  date: "Jan 15, 2026", 
-                  img: "/blog/whale.png", 
-                  slug: "whale-watching" 
-                }
-              ].map((post, i) => (
-                <motion.div 
-                  key={i} 
-                  variants={fadeInUp} 
-                  className="group cursor-pointer bg-white p-6 rounded-[3rem] shadow-xl hover:shadow-2xl transition-all"
-                  onClick={() => window.location.href = `/blog/${post.slug}`}
-                >
-                   <div className="relative h-72 rounded-[2.5rem] overflow-hidden mb-8 shadow-inner bg-lavender">
-                      <Image 
-                        src={post.img} 
-                        alt={post.title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className="object-cover group-hover:scale-110 transition-transform duration-1000"
-                      />
-                      <div className="absolute top-6 left-6 bg-primary text-white text-[10px] font-bold px-5 py-2 rounded-full uppercase tracking-[0.2em] shadow-2xl">
-                        {post.category}
-                      </div>
-                   </div>
-                   <div className="px-4 pb-4">
-                     <h3 className="text-2xl font-display font-bold mb-4 group-hover:text-primary transition-colors leading-tight tracking-tight">{post.title}</h3>
-                     <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4 text-[10px] font-bold text-foreground/40 uppercase tracking-[0.2em]">
-                           <span>{post.date}</span>
-                        </div>
-                        <ArrowRight size={18} className="text-primary opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all" />
-                     </div>
-                   </div>
-                </motion.div>
-              ))}
-           </motion.div>
+                <div className="px-6 pb-6 pt-2 flex items-center justify-between text-xs text-navy/50 font-medium">
+                  <span>{post.date}</span>
+                  <div className="flex items-center gap-1 text-purple font-bold">
+                    <span>Read Article</span>
+                    <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
-      </motion.section>
+      </section>
 
-      {/* Footer / Contact Preview */}
+      {/* Full-Width Kandy CTA Banner */}
+      <section className="relative h-[400px] sm:h-[480px] overflow-hidden">
+        <Image
+          src="/destinations/kandy.png"
+          alt="Kandy Temple of the Tooth Relic - Sri Lanka Cultural Heritage"
+          fill
+          sizes="100vw"
+          className="object-cover object-center brightness-90"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-navy/90 via-navy/60 to-navy/30" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center px-4">
+            <span className="inline-block px-4 py-1.5 bg-gold/25 border border-gold/50 text-gold text-xs font-bold uppercase tracking-widest rounded-full mb-5">
+              Book Your Journey
+            </span>
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-display font-black text-white leading-tight mb-5 drop-shadow-xl">
+              READY TO EXPLORE <br />
+              <span className="text-gold italic font-serif font-normal">Sri Lanka?</span>
+            </h2>
+            <p className="text-white/80 text-base sm:text-lg leading-relaxed mb-8 max-w-xl mx-auto font-medium">
+              Our expert chauffeurs are ready to guide you through the island&#39;s most iconic landscapes. Book your private tour today.
+            </p>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Link 
+                href="/book"
+                className="inline-flex items-center gap-2.5 bg-purple hover:bg-purple/90 text-white px-8 py-4 rounded-xl font-bold shadow-lg shadow-purple/40 transition-all text-sm uppercase tracking-wide"
+              >
+                <span>Book Now</span>
+                <ArrowRight size={16} />
+              </Link>
+              <Link 
+                href="/planner"
+                className="inline-flex items-center gap-2.5 bg-white/15 hover:bg-white/25 backdrop-blur-sm text-white border border-white/30 px-8 py-4 rounded-xl font-bold transition-all text-sm uppercase tracking-wide"
+              >
+                <span>Plan My Trip</span>
+                <ArrowRight size={16} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Clean Global Footer */}
       <Footer />
       
-      {/* WhatsApp Button */}
-      <motion.a 
-        href="https://wa.me/94760448292" 
-        target="_blank" 
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 1, type: "spring" }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        className="fixed bottom-10 right-10 z-50 bg-[#25D366] text-white p-5 rounded-full shadow-2xl hover:bg-[#128C7E] transition-all cursor-pointer shadow-[#25D366]/30 group"
-      >
-        <svg 
-          viewBox="0 0 24 24" 
-          width="28" 
-          height="28" 
-          fill="currentColor" 
-          className="group-hover:rotate-12 transition-transform"
-        >
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.345-4.39 10.298-9.885 10.298m8.452-16.141a11.53 11.53 0 00-8.155-3.376C5.895 2.688 1.156 7.427 1.154 12.875c0 1.742.454 3.44 1.317 4.938L1 23l5.228-1.371a11.45 11.45 0 00 5.62 1.463h.005c6.397 0 11.603-5.206 11.606-11.607a11.48 11.48 0 00-3.377-8.21z"/>
-        </svg>
-        <span className="absolute right-full mr-4 bg-white text-navy text-xs font-bold px-4 py-2 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-xl border border-black/5">Chat with us</span>
-      </motion.a>
+      {/* Clean, Non-obstructive WhatsApp Floating Button */}
+      <WhatsAppFloating />
     </main>
   );
 }
